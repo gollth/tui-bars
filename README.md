@@ -8,4 +8,19 @@ Provides additional bar widgets for the great [tui-rs](https://github.com/fdehau
 
 ## Demo
 
-<img src="./media/demo.gif" alt="Demo showcase of the ValueBar widget">
+![](https://raw.githubusercontent.com/gollth/tui-bars/main/media/demo.gif)
+
+
+```rust,no_run
+use tui::{widgets::Block, layout::Direction};
+use tui_bars::ValueBar;
+
+let x = 1.234;
+
+ValueBar::default()
+    .direction(Direction::Vertical)
+    .value(x)
+    .label(format!("{x:.2}"))
+    .range(5.)
+    .block(Block::default().title("My Value X"));
+```

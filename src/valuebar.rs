@@ -7,6 +7,7 @@ use tui::{
     widgets::{Block, Widget},
 };
 
+/// A symmetrical gauge for a value
 #[derive(Debug, Clone)]
 pub struct ValueBar<'a> {
     value: f32,
@@ -31,16 +32,20 @@ impl<'a> Default for ValueBar<'a> {
 }
 
 impl<'a> ValueBar<'a> {
+    /// Set the value how much this bar should be filled. Should be between [`-range`..`range`]
     pub fn value(mut self, value: f32) -> Self {
         self.value = value;
         self
     }
 
+    /// The upper and lower bound of the gauge.
     pub fn range(mut self, range: f32) -> Self {
         self.range = range;
         self
     }
 
+    /// Show a label at the zero position of the bar. By default no label is shown.
+    /// If width of bar is too small, the label won't be rendered.
     pub fn label<T>(mut self, label: T) -> Self
     where
         T: Into<Cow<'a, str>>,
@@ -49,16 +54,19 @@ impl<'a> ValueBar<'a> {
         self
     }
 
+    /// Set that this bar is filling horizontally (default) or vertically
     pub fn direction(mut self, direction: Direction) -> Self {
         self.direction = direction;
         self
     }
 
+    /// Surround this bar by a [Block]
     pub fn block(mut self, block: Block<'a>) -> Self {
         self.block = Some(block);
         self
     }
 
+    /// Apply a custom style to this bar
     pub fn style(mut self, style: Style) -> Self {
         self.style = style;
         self
