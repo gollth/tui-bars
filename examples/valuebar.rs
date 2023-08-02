@@ -12,6 +12,7 @@ use crossterm::{
 };
 use tui::{
     backend::{Backend, CrosstermBackend},
+    layout::{Constraint, Direction, Layout},
     style::{Color, Style},
     widgets::{Block, Borders},
     Frame, Terminal,
@@ -19,11 +20,16 @@ use tui::{
 use tui_bars::ValueBar;
 
 #[derive(Default)]
-struct App(f32);
+struct App([f32; 4]);
 
 impl App {
     fn on_tick(&mut self, t: f32) {
-        self.0 = (2. * PI * t / 5.).sin();
+        self.0 = [
+            (2. * PI * (t + 0.0) / 5.).sin(),
+            (2. * PI * (t + 0.25) / 5.).sin(),
+            (2. * PI * (t + 0.5) / 5.).sin(),
+            (2. * PI * (t + 0.75) / 5.).sin(),
+        ];
     }
 }
 
@@ -81,11 +87,54 @@ fn run_app<B: Backend>(
 }
 
 fn ui<B: Backend>(f: &mut Frame<B>, app: &App) {
-    let bar = ValueBar::default()
-        .value(app.0)
-        .range(1.)
-        .label(format!("{:.2}", app.0))
-        .block(Block::default().title("SinWave").borders(Borders::ALL))
-        .style(Style::default().fg(Color::Red));
-    f.render_widget(bar, f.size());
+    let layout = Layout::default()
+        .direction(Direction::Horizontal)
+        .constraints([Constraint::Percentage(50), Constraint::Percentage(50)].as_ref())
+        .split(f.size());
+
+    let horizontals = Layout::default()
+        .direction(Direction::Vertical)
+        .constraints(
+            [
+                Constraint::Percentage(25),
+                Constraint::Percentage(25),
+                Constraint::Percentage(25),
+                Constraint::Percentage(25),
+            ]
+            .as_ref(),
+        )
+        .split(layout[0]);
+    let verticals = Layout::default()
+        .direction(Direction::Horizontal)
+        .constraints(
+            [
+                Constraint::Percentage(25),
+                Constraint::Percentage(25),
+                Constraint::Percentage(25),
+                Constraint::Percentage(25),
+            ]
+            .as_ref(),
+        )
+        .split(layout[1]);
+
+    for (i, color) in [
+        Color::DarkGray,
+        Color::Black,
+        Color::LightBlue,
+        Color::White,
+    ]
+    .into_iter()
+    .enumerate()
+    {
+        let x = app.0[i];
+        let bar = ValueBar::default()
+            .value(x)
+            .range(1.)
+            .direction(Direction::Horizontal)
+            .label(format!("{x:.2}"))
+            .block(Block::default().title("SinWave").borders(Borders::ALL))
+            .style(Style::default().fg(color));
+        f.render_widget(bar.clone(), horizontals[i]);
+        f.render_widget(bar.direction(Direction::Vertical), verticals[i]);
+    }
 }

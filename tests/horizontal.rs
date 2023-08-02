@@ -24,7 +24,7 @@ fn assert_renders(widget: ValueBar, expected: Buffer) {
 }
 
 #[test]
-fn renders_zero_value() {
+fn horizontal_renders_zero_value() {
     assert_renders(
         ValueBar::default().value(0.).range(RANGE),
         Buffer::with_lines(vec![
@@ -38,7 +38,7 @@ fn renders_zero_value() {
 }
 
 #[test]
-fn renders_zero_value_with_label() {
+fn horizontal_renders_zero_value_with_label() {
     assert_renders(
         ValueBar::default()
             .value(0.)
@@ -55,7 +55,7 @@ fn renders_zero_value_with_label() {
 }
 
 #[test]
-fn renders_zero_value_but_skips_label_if_label_too_large() {
+fn horizontal_renders_zero_value_but_skips_label_if_label_too_large() {
     assert_renders(
         ValueBar::default()
             .value(0.)
@@ -72,7 +72,7 @@ fn renders_zero_value_but_skips_label_if_label_too_large() {
 }
 
 #[test]
-fn renders_zero_value_with_block() {
+fn horizontal_renders_zero_value_with_block() {
     assert_renders(
         ValueBar::default()
             .value(0.)
@@ -89,7 +89,7 @@ fn renders_zero_value_with_block() {
 }
 
 #[test]
-fn renders_zero_value_with_block_and_label() {
+fn horizontal_renders_zero_value_with_block_and_label() {
     assert_renders(
         ValueBar::default()
             .value(0.)
@@ -132,7 +132,7 @@ fn renders_zero_value_with_block_and_label() {
 #[test_case(-RANGE*0.6, "  ███     " ; "negative_range_60_percent")]
 #[test_case(-RANGE*0.8, " ████     " ; "negative_range_80_percent")]
 #[test_case(-RANGE*1.0, "█████     " ; "negative_range_full")]
-fn renders_value(value: f32, line: &str) {
+fn horizontal_renders_value(value: f32, line: &str) {
     assert_renders(
         ValueBar::default().value(value).range(RANGE),
         Buffer::with_lines(vec![line, line, line, line, line]),
@@ -165,7 +165,7 @@ fn renders_value(value: f32, line: &str) {
 #[test_case(-RANGE*0.6, "  ███     " ; "negative_range_60_percent")]
 #[test_case(-RANGE*0.8, " ████     " ; "negative_range_80_percent")]
 #[test_case(-RANGE*1.0, "█████     " ; "negative_range_full")]
-fn renders_value_with_label(value: f32, line: &str) {
+fn horizontal_renders_value_with_label(value: f32, line: &str) {
     let label = "abcdefghij";
     assert_renders(
         ValueBar::default().value(value).range(RANGE).label(label),
@@ -177,7 +177,7 @@ fn renders_value_with_label(value: f32, line: &str) {
 #[test_case(Color::Blue ; "blue")]
 #[test_case(Color::Yellow ; "yellow")]
 #[test_case(Color::Green ; "green")]
-fn renders_with_style_fg(color: Color) {
+fn horizontal_renders_with_style_fg(color: Color) {
     let mut expected = Buffer::with_lines(vec![
         "     █▏   ",
         "     █▏   ",
@@ -202,7 +202,7 @@ fn renders_with_style_fg(color: Color) {
 #[test_case(Color::Blue ; "blue")]
 #[test_case(Color::Yellow ; "yellow")]
 #[test_case(Color::Green ; "green")]
-fn renders_with_style_bg(color: Color) {
+fn horizontal_renders_with_style_bg(color: Color) {
     let mut expected = Buffer::with_lines(vec![
         "     █▏   ",
         "     █▏   ",
@@ -227,7 +227,7 @@ fn renders_with_style_bg(color: Color) {
 #[test_case(Color::Blue ; "blue")]
 #[test_case(Color::Yellow ; "yellow")]
 #[test_case(Color::Green ; "green")]
-fn renders_with_style_and_label(color: Color) {
+fn horizontal_renders_with_style_and_label(color: Color) {
     let mut expected = Buffer::with_lines(vec![
         "     ██▏  ",
         "     ██▏  ",
@@ -247,7 +247,7 @@ fn renders_with_style_and_label(color: Color) {
                 cell.set_bg(color);
             } else {
                 cell.set_fg(color);
-            };
+            }
         }
     }
 
