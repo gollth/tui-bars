@@ -4,15 +4,14 @@
 [![crate.io](https://img.shields.io/crates/v/tui-bars.svg)](https://crates.io/crates/tui-bars)
 [![Docs](https://docs.rs/tui-bars/badge.svg)](https://docs.rs/crate/tui-bars/)
 
-Provides additional bar widgets for the great [tui-rs](https://github.com/fdehau/tui-rs) crate.
+Provides additional bar widgets for the great [ratatui](https://github.com/ratatui-org/ratatui) crate.
 
 ## Demo
 
 ![](https://raw.githubusercontent.com/gollth/tui-bars/main/media/demo.gif)
 
-
 ```rust,no_run
-use tui::{widgets::Block, layout::Direction};
+use ratatui::{widgets::Block, layout::Direction};
 use tui_bars::ValueBar;
 
 let x = 1.234;

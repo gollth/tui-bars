@@ -1,6 +1,6 @@
 use std::borrow::Cow;
 
-use tui::{
+use ratatui::{
     buffer::Buffer,
     layout::{Direction, Rect},
     style::{Color, Style},

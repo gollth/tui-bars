@@ -1,12 +1,12 @@
 use itertools::Itertools;
-use test_case::test_case;
-use tui::{
+use ratatui::{
     backend::TestBackend,
     buffer::Buffer,
     style::{Color, Style},
     widgets::{Block, Borders},
     Terminal,
 };
+use test_case::test_case;
 use tui_bars::ValueBar;
 
 const TERMINAL_WIDTH: u16 = 10;
